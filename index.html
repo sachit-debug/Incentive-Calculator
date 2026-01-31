@@ -1,152 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Incentive Calculator</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at 80% 20%, #0f2a1f, #0b1220 60%);
-    color: white;
-    overflow-x: hidden;
-}
-
-/* subtle grain */
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size: 3px 3px;
-    opacity:.2;
-    pointer-events:none;
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at 80% 20%, #0f2b2a 0%, #0b1220 60%);
+  color:white;
+  overflow-x:hidden;
 }
 
 .header {
-    text-align: center;
-    margin-top: 40px;
+  text-align:center;
+  margin-top:40px;
 }
 
-.header img {
-    width: 200px;
-    animation: floatLogo 6s ease-in-out infinite alternate;
-}
-
-@keyframes floatLogo {
-    to { transform: translateY(8px); }
+.logo {
+  width:180px;
+  margin-bottom:10px;
 }
 
 .title {
-    font-size: 26px;
-    font-weight: bold;
-    margin-top: 15px;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:2px;
 }
 
 .container {
-    max-width: 420px;
-    margin: 40px auto;
-    padding: 30px;
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    box-shadow:
-        inset 0 1px 1px rgba(255,255,255,.06),
-        0 30px 80px rgba(0,0,0,.6);
+  max-width:450px;
+  margin:40px auto;
+  padding:30px;
+  border-radius:20px;
+  background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  backdrop-filter: blur(20px);
 }
 
 label {
-    display: block;
-    margin-top: 15px;
-    font-weight: 600;
+  font-weight:600;
+  margin-top:20px;
+  display:block;
 }
 
 input, select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 6px;
-    border-radius: 10px;
-    border: none;
-    background: rgba(255,255,255,.08);
-    color: white;
-    font-size: 15px;
-    transition: .2s;
-}
-
-input:focus, select:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #6366f1;
-    background: rgba(255,255,255,.12);
-    transform: translateY(-1px);
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  margin-top:8px;
+  background:rgba(255,255,255,.08);
+  color:white;
 }
 
 button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 20px;
-    border-radius: 12px;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(90deg, #6366f1, #8b5cf6);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: .2s;
+  width:100%;
+  margin-top:25px;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
+  font-weight:600;
+  background: linear-gradient(90deg,#6366f1,#8b5cf6);
+  color:white;
+  cursor:pointer;
+  transition:.2s;
 }
 
-button:active {
-    transform: scale(.97);
-}
-
-button::after {
-    content: "";
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,.2), transparent);
-    animation: shine 3s infinite;
-}
-
-@keyframes shine {
-    to { left: 100%; }
-}
+button:active { transform:scale(.97); }
 
 .result {
-    margin-top: 25px;
-    text-align: center;
-    padding: 20px;
-    border-radius: 15px;
-    background: rgba(255,255,255,.05);
-    display: none;
+  margin-top:25px;
+  padding:20px;
+  border-radius:16px;
+  background:rgba(255,255,255,.05);
+  text-align:center;
+  animation:fadeIn .4s ease;
 }
 
-@keyframes fadeInUp {
-    from { opacity:0; transform: translateY(10px); }
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} }
+
+.money {
+  position:fixed;
+  top:-50px;
+  font-size:24px;
+  animation:fall 3s linear infinite;
 }
 
-.result.show {
-    display:block;
-    animation: fadeInUp .4s ease;
-}
-
-.amount {
-    font-size: 34px;
-    font-weight: bold;
-    color: #4ade80;
-}
-
-.details {
-    font-size: 14px;
-    margin-top: 10px;
-    opacity: .9;
-}
-
-@media(max-width:480px){
-    .container{ margin:20px; padding:20px;}
-    .header img{ width:150px;}
+@keyframes fall {
+  to { transform:translateY(120vh) rotate(360deg); }
 }
 </style>
 </head>
@@ -154,97 +99,91 @@ button::after {
 <body>
 
 <div class="header">
-    <img src="https://i.imgur.com/7QFQFQX.png">
-    <div class="title">INCENTIVE CALCULATOR</div>
+  <img src="scaler-logo.png" class="logo">
+  <div class="title">INCENTIVE CALCULATOR</div>
 </div>
 
 <div class="container">
-    <label>Non Discounted Net Sales</label>
-    <input type="number" id="non" min="0">
+  <label>Non Discounted Net Sales</label>
+  <input type="number" id="non">
 
-    <label>Referral Sales</label>
-    <input type="number" id="ref" min="0">
+  <label>Referral Sales</label>
+  <input type="number" id="ref">
 
-    <label>Manager Coupon Sales</label>
-    <input type="number" id="man" min="0">
+  <label>Manager Coupon Sales</label>
+  <input type="number" id="mgr">
 
-    <label>On Probation?</label>
-    <select id="prob">
-        <option>No</option>
-        <option>Yes</option>
-    </select>
+  <label>On Probation?</label>
+  <select id="prob">
+    <option>No</option>
+    <option>Yes</option>
+  </select>
 
-    <button onclick="calculate()">Calculate Incentive</button>
+  <button onclick="calc()">Calculate Incentive</button>
 
-    <div class="result" id="resultBox">
-        <div id="status"></div>
-        <div class="amount" id="amount">₹0</div>
-        <div class="details" id="breakdown"></div>
-    </div>
+  <div id="output"></div>
 </div>
 
-<audio id="cashSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cash-register-purchase-873.mp3"></audio>
+<audio id="cashSound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
 
 <script>
-function getSlab(total){
-    if(total>=18) return 30000;
-    if(total>=16) return 27500;
-    if(total>=14) return 25000;
-    if(total>=12) return 22500;
-    if(total>=10) return 20000;
-    if(total>=8) return 17500;
-    if(total>=6) return 15000;
-    return 12500;
+function slabRate(total){
+  if(total>=18) return 30000;
+  if(total>=16) return 27500;
+  if(total>=14) return 25000;
+  if(total>=12) return 22500;
+  if(total>=10) return 20000;
+  if(total>=8) return 17500;
+  if(total>=6) return 15000;
+  return 12500;
 }
 
-function animateValue(el, start, end, duration){
-    let range=end-start, startTime=null;
-    function step(t){
-        if(!startTime) startTime=t;
-        let progress=Math.min((t-startTime)/duration,1);
-        el.innerText="₹"+Math.floor(progress*range+start).toLocaleString();
-        if(progress<1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
+function moneyRain(){
+  for(let i=0;i<25;i++){
+    let m=document.createElement('div');
+    m.className='money';
+    m.innerHTML='💰';
+    m.style.left=Math.random()*100+'vw';
+    m.style.animationDelay=Math.random()*2+'s';
+    document.body.appendChild(m);
+    setTimeout(()=>m.remove(),3000);
+  }
 }
 
-function calculate(){
-    let non=+document.getElementById('non').value||0;
-    let ref=+document.getElementById('ref').value||0;
-    let man=+document.getElementById('man').value||0;
-    let probation=document.getElementById('prob').value==="Yes";
+function calc(){
+  let non=+document.getElementById('non').value||0;
+  let ref=+document.getElementById('ref').value||0;
+  let mgr=+document.getElementById('mgr').value||0;
+  let prob=document.getElementById('prob').value;
+  let total=non+ref+mgr;
+  let out=document.getElementById('output');
 
-    let total=non+ref+man;
-    let resultBox=document.getElementById('resultBox');
-    let status=document.getElementById('status');
-    let amountEl=document.getElementById('amount');
-    let breakdown=document.getElementById('breakdown');
+  if(total<4){
+    out.innerHTML='<div class="result">❌ Minimum 4 total sales required</div>';
+    return;
+  }
 
-    if(total<4){
-        resultBox.classList.add("show");
-        status.innerHTML="<b>Not Eligible</b>";
-        animateValue(amountEl,0,0,500);
-        breakdown.innerHTML="Minimum 4 total sales required";
-        return;
-    }
+  let rate=slabRate(total);
+  let nonAmt = prob==='Yes' ? non*5000 : non*rate;
+  let refAmt = ref*5000;
+  let mgrAmt = mgr*10000;
+  let totalAmt = nonAmt+refAmt+mgrAmt;
 
-    let rate=getSlab(total);
-    if(probation) rate=5000;
+  document.getElementById('cashSound').play();
+  moneyRain();
 
-    let totalAmount=(non*rate)+(ref*5000)+(man*10000);
-
-    status.innerHTML="<b>Congratulations 🎉 Eligible</b>";
-    resultBox.classList.add("show");
-    animateValue(amountEl,0,totalAmount,800);
-    breakdown.innerHTML=
-        "Total Sales: "+total+"<br>"+
-        "Non Discounted: "+non+" × "+rate+"<br>"+
-        "Referral: "+ref+" × 5000<br>"+
-        "Manager: "+man+" × 10000";
-
-    document.getElementById("cashSound").play();
+  out.innerHTML=`
+  <div class="result">
+    <h2>Congratulations 🎉 Eligible</h2>
+    <h1 style="color:#4ade80">₹ ${totalAmt.toLocaleString()}</h1>
+    <p>Total Sales: ${total}</p>
+    <p>Non Discounted: ${non} × ${prob==='Yes'?5000:rate} = ₹ ${nonAmt}</p>
+    <p>Referral: ${ref} × 5000 = ₹ ${refAmt}</p>
+    <p>Manager: ${mgr} × 10000 = ₹ ${mgrAmt}</p>
+  </div>`;
 }
 </script>
 
 </body>
 </html>
+
