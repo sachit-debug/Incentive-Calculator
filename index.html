@@ -114,12 +114,14 @@ button{
 </div>
 
 <script>
+// 🎮 Cash payout sound
 function playCongratsSound(){
-  const audio = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
-  audio.volume = 0.4;
+  const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3");
+  audio.volume = 0.5;
   audio.play();
 }
 
+// Slab logic
 function getSlabRate(n){
  if(n>=18)return 30000;
  if(n>=16)return 27500;
@@ -128,7 +130,7 @@ function getSlabRate(n){
  if(n>=10)return 20000;
  if(n>=8)return 17500;
  if(n>=6)return 15000;
- return 12500; // base slab even if ND < 4
+ return 12500;
 }
 
 function calculate(){
@@ -154,6 +156,7 @@ function calculate(){
  }
 
  let ndRate = probation==="yes" ? 5000 : getSlabRate(n);
+
  let nonDiscPay=n*ndRate;
  let refPay=r*5000;
  let mgrPay=m*10000;
@@ -174,6 +177,7 @@ function calculate(){
 
 </body>
 </html>
+
 
 
 
