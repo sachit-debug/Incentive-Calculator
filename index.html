@@ -5,24 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scaler Incentive Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:'Poppins',sans-serif;height:100vh;display:flex;justify-content:center;align-items:center;background:#0f172a}
+
+body{
+ margin:0;
+ font-family:'Poppins',sans-serif;
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:linear-gradient(120deg,#0f172a,#1e293b,#0f172a);
+ overflow:hidden;
+}
+
+/* Animated glow background */
+body::before, body::after{
+ content:"";
+ position:absolute;
+ width:600px;
+ height:600px;
+ border-radius:50%;
+ filter:blur(120px);
+ opacity:0.35;
+ animation:float 18s infinite alternate ease-in-out;
+}
+body::before{background:#6366f1;top:-150px;left:-150px;}
+body::after{background:#8b5cf6;bottom:-150px;right:-150px;animation-duration:22s;}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(80px)}}
+
+/* Header */
 .header{position:absolute;top:40px;text-align:center;width:100%}
 .header img{height:160px}
-.tagline{font-size:24px;font-weight:700;color:#c7d2fe;margin-top:12px}
-.container{background:rgba(30,41,59,0.85);backdrop-filter:blur(20px);border-radius:20px;padding:36px;width:460px;box-shadow:0 30px 80px rgba(0,0,0,0.6);margin-top:220px}
+.tagline{font-size:26px;font-weight:700;color:#e2e8f0;margin-top:12px}
+
+/* Glass card */
+.container{
+ background:rgba(255,255,255,0.06);
+ backdrop-filter:blur(35px);
+ border-radius:28px;
+ padding:40px;
+ width:480px;
+ box-shadow:0 25px 60px rgba(0,0,0,0.5);
+ border:1px solid rgba(255,255,255,0.08);
+ margin-top:220px;
+}
+
 h1{color:white;font-size:22px}
-.sub{color:#a5b4fc;font-size:13px;margin-bottom:22px}
-label{color:#cbd5e1;font-size:13px;font-weight:600}
-input,select{width:100%;padding:12px;margin:8px 0 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.06);color:white}
-button{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(120deg,#6366f1,#8b5cf6);color:white;font-weight:600;font-size:15px;cursor:pointer}
-.result{margin-top:20px;padding:18px;border-radius:14px;display:none;text-align:center}
-.big{font-size:34px;font-weight:700;color:#4ade80}
-.calc-lines{margin-top:12px;font-size:13px;color:#cbd5e1}
-.white-text{color:white;font-weight:700;font-size:18px}
+.sub{color:#cbd5e1;font-size:13px;margin-bottom:22px}
+label{color:#e2e8f0;font-size:13px;font-weight:600}
+
+input,select{
+ width:100%;padding:14px;margin:8px 0 18px;border-radius:16px;
+ border:none;background:rgba(255,255,255,0.08);color:white;outline:none
+}
+
+button{
+ width:100%;padding:15px;border:none;border-radius:18px;
+ background:linear-gradient(120deg,#6366f1,#8b5cf6);
+ color:white;font-weight:600;font-size:16px;cursor:pointer;
+}
+
+.result{
+ margin-top:22px;padding:20px;border-radius:18px;display:none;
+ text-align:center;background:rgba(255,255,255,0.05);
+}
+
+.big{font-size:38px;font-weight:700;color:#4ade80}
+.calc-lines{margin-top:14px;font-size:13px;color:#cbd5e1}
+.white-text{color:white;font-weight:700;font-size:19px}
 </style>
 </head>
+
 <body>
 
 <div class="header">
@@ -59,6 +114,12 @@ button{width:100%;padding:14px;border:none;border-radius:14px;background:linear-
 </div>
 
 <script>
+function playCongratsSound(){
+  const audio = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+  audio.volume = 0.4;
+  audio.play();
+}
+
 function getSlabRate(n){
  if(n>=18)return 30000;
  if(n>=16)return 27500;
@@ -67,7 +128,7 @@ function getSlabRate(n){
  if(n>=10)return 20000;
  if(n>=8)return 17500;
  if(n>=6)return 15000;
- return 12500; // base rate even if ND < 4
+ return 12500; // base slab even if ND < 4
 }
 
 function calculate(){
@@ -93,7 +154,6 @@ function calculate(){
  }
 
  let ndRate = probation==="yes" ? 5000 : getSlabRate(n);
-
  let nonDiscPay=n*ndRate;
  let refPay=r*5000;
  let mgrPay=m*10000;
@@ -107,9 +167,13 @@ function calculate(){
  Non Discounted: ${n} × ${ndRate.toLocaleString()} = ₹ ${nonDiscPay.toLocaleString()}<br>
  Referral: ${r} × 5,000 = ₹ ${refPay.toLocaleString()}<br>
  Manager: ${m} × 10,000 = ₹ ${mgrPay.toLocaleString()}`;
+
+ playCongratsSound();
 }
 </script>
+
 </body>
 </html>
+
 
 
