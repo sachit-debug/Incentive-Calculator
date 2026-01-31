@@ -5,56 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scaler Incentive Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:'Poppins',sans-serif;
- height:100vh;
- display:flex;
- justify-content:center;
- align-items:center;
- background:#0f172a;
- overflow:hidden;
-}
+body{margin:0;font-family:'Poppins',sans-serif;height:100vh;display:flex;justify-content:center;align-items:center;background:#0f172a;overflow:hidden}
 .header{position:absolute;top:40px;text-align:center;width:100%}
 .header img{height:160px}
 .tagline{font-size:24px;font-weight:700;color:#c7d2fe;margin-top:12px}
-
-.container{
- background:rgba(30,41,59,0.85);
- backdrop-filter:blur(20px);
- border-radius:20px;
- padding:36px;
- width:460px;
- box-shadow:0 30px 80px rgba(0,0,0,0.6);
- margin-top:220px;
-}
-
+.container{background:rgba(30,41,59,0.85);backdrop-filter:blur(20px);border-radius:20px;padding:36px;width:460px;box-shadow:0 30px 80px rgba(0,0,0,0.6);margin-top:220px}
 h1{color:white;font-size:22px}
 .sub{color:#a5b4fc;font-size:13px;margin-bottom:22px}
 label{color:#cbd5e1;font-size:13px;font-weight:600}
-
-input,select{
- width:100%;padding:12px;margin:8px 0 18px;border-radius:12px;
- border:1px solid rgba(255,255,255,0.08);
- background:rgba(255,255,255,0.06);
- color:white
-}
-
-button{
- width:100%;padding:14px;border:none;border-radius:14px;
- background:linear-gradient(120deg,#6366f1,#8b5cf6);
- color:white;font-weight:600;font-size:15px;cursor:pointer
-}
-
+input,select{width:100%;padding:12px;margin:8px 0 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.06);color:white}
+button{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(120deg,#6366f1,#8b5cf6);color:white;font-weight:600;font-size:15px;cursor:pointer}
 .loader{height:4px;width:0;background:#8b5cf6;margin-bottom:12px;transition:width 0.6s}
 .result{margin-top:20px;padding:18px;border-radius:14px;display:none;text-align:center;position:relative;overflow:hidden}
 .big{font-size:34px;font-weight:700;color:#4ade80}
 .calc-lines{margin-top:12px;font-size:13px;color:#cbd5e1}
 .white-text{color:white;font-weight:700;font-size:18px}
-
 .money{position:absolute;top:-20px;font-size:22px;animation:fall 2s linear forwards}
 @keyframes fall{to{transform:translateY(260px);opacity:0}}
 .happy{font-size:40px;animation:pop 0.5s ease}
@@ -63,7 +30,6 @@ button{
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 </style>
 </head>
-
 <body>
 
 <div class="header">
@@ -84,12 +50,6 @@ button{
  <label>Manager Coupon Sales</label>
  <input type="number" id="manager">
 
- <label>On Probation at Cohort Start?</label>
- <select id="probation">
-  <option value="no">No</option>
-  <option value="yes">Yes</option>
- </select>
-
  <button onclick="calculate()">Calculate Incentive</button>
  <div class="loader" id="loader"></div>
 
@@ -102,25 +62,25 @@ button{
 </div>
 
 <script>
-function slabRate(s){
- if(s>=18)return 30000;
- if(s>=16)return 27500;
- if(s>=14)return 25000;
- if(s>=12)return 22500;
- if(s>=10)return 20000;
- if(s>=8)return 17500;
- if(s>=6)return 15000;
- if(s>=4)return 12500;
+function getSlabRate(n){
+ if(n>=18)return 30000;
+ if(n>=16)return 27500;
+ if(n>=14)return 25000;
+ if(n>=12)return 22500;
+ if(n>=10)return 20000;
+ if(n>=8)return 17500;
+ if(n>=6)return 15000;
+ if(n>=4)return 12500;
  return 0;
 }
 
-function rainMoney(container){
+function rainMoney(c){
  for(let i=0;i<18;i++){
   let m=document.createElement("div");
   m.className="money";
   m.innerHTML="💸";
   m.style.left=Math.random()*90+"%";
-  container.appendChild(m);
+  c.appendChild(m);
   setTimeout(()=>m.remove(),2000);
  }
 }
@@ -140,24 +100,20 @@ function calculate(){
  let n=parseInt(nonDiscounted.value)||0;
  let r=parseInt(referral.value)||0;
  let m=parseInt(manager.value)||0;
- let p=probation.value;
-
- let totalSales = n + r + m;  // NEW RULE
+ let totalSales=n+r+m;
 
  setTimeout(()=>{
 
- if(totalSales < 4){
+ if(totalSales<4){
   status.innerHTML='<div class="white-text">Not Eligible</div>';
   amount.innerHTML="Minimum 4 total sales required";
-  calcDetails.innerHTML="";
   emoji.innerHTML='<div class="sad">😢</div>';
   loader.style.width="0";
   return;
  }
 
- let rate=slabRate(n);
- let nonDiscRate=p==="yes"?5000:rate;
- let nonDiscPay=n*nonDiscRate;
+ let rate=getSlabRate(n);
+ let nonDiscPay=n*rate;
  let refPay=r*5000;
  let mgrPay=m*10000;
  let total=nonDiscPay+refPay+mgrPay;
@@ -166,18 +122,18 @@ function calculate(){
  amount.innerHTML="₹ "+total.toLocaleString();
 
  calcDetails.innerHTML=
- `Total Sales = ${totalSales} <br><br>
-  Non discounted: ${n} × ${nonDiscRate.toLocaleString()} = ₹ ${nonDiscPay.toLocaleString()} <br>
-  Referral: ${r} × 5,000 = ₹ ${refPay.toLocaleString()} <br>
-  Manager: ${m} × 10,000 = ₹ ${mgrPay.toLocaleString()}`;
+ `Total Sales: ${totalSales}<br><br>
+ Non Discounted: ${n} × ${rate.toLocaleString()} = ₹ ${nonDiscPay.toLocaleString()}<br>
+ Referral: ${r} × 5,000 = ₹ ${refPay.toLocaleString()}<br>
+ Manager: ${m} × 10,000 = ₹ ${mgrPay.toLocaleString()}`;
 
  emoji.innerHTML='<div class="happy">😄</div>';
  rainMoney(resultBox);
-
  loader.style.width="0";
+
  },700);
 }
 </script>
-
 </body>
 </html>
+
