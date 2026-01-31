@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scaler Incentive Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
@@ -15,89 +15,93 @@ body{
  display:flex;
  justify-content:center;
  align-items:center;
- overflow:hidden;
  background:#0f172a;
 }
 
-/* Liquid glow */
-.liquid{
- position:absolute;width:600px;height:600px;
- background:radial-gradient(circle,rgba(99,102,241,0.35),transparent 60%);
- filter:blur(90px);
- animation:moveBlob 18s ease-in-out infinite alternate
-}
-.liquid.two{
- background:radial-gradient(circle,rgba(139,92,246,0.35),transparent 60%);
- animation-duration:22s
-}
-@keyframes moveBlob{
- from{transform:translate(-150px,-100px) scale(1)}
- to{transform:translate(150px,120px) scale(1.2)}
-}
-
-/* Header */
 .header{
- position:absolute;top:30px;text-align:center;width:100%;z-index:2
+ position:absolute;
+ top:40px;
+ text-align:center;
+ width:100%;
 }
-.header img{height:170px}
+.header img{height:160px}
 .tagline{
- font-size:26px;font-weight:700;color:#c7d2fe;margin-top:12px;letter-spacing:2px
+ font-size:24px;
+ font-weight:700;
+ color:#c7d2fe;
+ margin-top:12px;
 }
 
-/* Card */
 .container{
- backdrop-filter:blur(25px);
- background:rgba(30,41,59,0.6);
- border-radius:24px;
+ background:rgba(30,41,59,0.8);
+ backdrop-filter:blur(20px);
+ border-radius:20px;
  padding:36px;
  width:460px;
  box-shadow:0 30px 80px rgba(0,0,0,0.5);
- border:1px solid rgba(255,255,255,0.08);
- z-index:2;
- margin-top:200px;
+ margin-top:220px;
 }
 
-h1{font-size:22px;margin-bottom:4px;font-weight:600;color:white}
+h1{color:white;font-size:22px}
 .sub{color:#a5b4fc;font-size:13px;margin-bottom:22px}
-label{font-size:13px;font-weight:600;color:#cbd5e1}
+label{color:#cbd5e1;font-size:13px;font-weight:600}
 
 input,select{
- width:100%;padding:12px;margin:8px 0 18px;border-radius:14px;
+ width:100%;
+ padding:12px;
+ margin:8px 0 18px;
+ border-radius:12px;
  border:1px solid rgba(255,255,255,0.08);
  background:rgba(255,255,255,0.06);
  color:white
 }
 
 button{
- width:100%;padding:14px;border:none;border-radius:16px;
+ width:100%;
+ padding:14px;
+ border:none;
+ border-radius:14px;
  background:linear-gradient(120deg,#6366f1,#8b5cf6);
- color:white;font-weight:600;font-size:15px;cursor:pointer
+ color:white;
+ font-weight:600;
+ font-size:15px;
+ cursor:pointer
 }
 
 .loader{
- height:4px;width:0;
- background:linear-gradient(90deg,#6366f1,#8b5cf6);
- border-radius:4px;margin-bottom:12px;transition:width 0.6s ease
+ height:4px;
+ width:0;
+ background:#8b5cf6;
+ margin-bottom:12px;
+ transition:width 0.6s
 }
 
 .result{
- margin-top:20px;padding:18px;border-radius:16px;
- display:none;text-align:center
+ margin-top:20px;
+ padding:18px;
+ border-radius:14px;
+ display:none;
+ text-align:center
 }
-.eligible{background:rgba(16,185,129,0.15);color:#34d399}
-.noteligible{background:rgba(239,68,68,0.15);color:#f87171}
 
-.big{font-size:36px;font-weight:700;margin-top:6px;color:#4ade80}
-.calc-lines{margin-top:12px;font-size:13px;line-height:1.6;color:#cbd5e1}
+.big{
+ font-size:34px;
+ font-weight:700;
+ color:#4ade80
+}
+
+.calc-lines{
+ margin-top:12px;
+ font-size:13px;
+ color:#cbd5e1
+}
 </style>
 </head>
 
 <body>
-<div class="liquid"></div>
-<div class="liquid two"></div>
 
 <div class="header">
- <img src="scaler-logo.png" alt="Scaler Logo">
+ <img src="scaler-logo.png">
  <div class="tagline">INCENTIVE CALCULATOR</div>
 </div>
 
@@ -162,7 +166,6 @@ function calculate(){
 
  if(rate===0){
   resultBox.style.display="block";
-  resultBox.className="result noteligible";
   status.innerHTML="Not Eligible";
   amount.innerHTML="Minimum 4 required";
   calcDetails.innerHTML="";
@@ -177,7 +180,6 @@ function calculate(){
  let total=nonDiscPay+refPay+mgrPay;
 
  resultBox.style.display="block";
- resultBox.className="result eligible";
  status.innerHTML="Eligible 🎉";
  amount.innerHTML="₹ "+total.toLocaleString();
 
@@ -190,8 +192,6 @@ function calculate(){
  },700);
 }
 </script>
+
 </body>
 </html>
-
-
-
