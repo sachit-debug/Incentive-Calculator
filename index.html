@@ -20,19 +20,9 @@ body{
 }
 
 /* Header */
-.header{
- position:absolute;
- top:40px;
- text-align:center;
- width:100%;
-}
+.header{position:absolute;top:40px;text-align:center;width:100%}
 .header img{height:160px}
-.tagline{
- font-size:24px;
- font-weight:700;
- color:#c7d2fe;
- margin-top:12px;
-}
+.tagline{font-size:24px;font-weight:700;color:#c7d2fe;margin-top:12px}
 
 /* Card */
 .container{
@@ -89,17 +79,9 @@ button{
  overflow:hidden
 }
 
-.big{
- font-size:34px;
- font-weight:700;
- color:#4ade80
-}
-
-.calc-lines{
- margin-top:12px;
- font-size:13px;
- color:#cbd5e1
-}
+.big{font-size:34px;font-weight:700;color:#4ade80}
+.calc-lines{margin-top:12px;font-size:13px;color:#cbd5e1}
+.white-text{color:white;font-weight:700;font-size:18px}
 
 /* Animations */
 .money{
@@ -108,34 +90,13 @@ button{
  font-size:22px;
  animation:fall 2s linear forwards
 }
-@keyframes fall{
- to{transform:translateY(250px);opacity:0}
-}
+@keyframes fall{to{transform:translateY(260px);opacity:0}}
 
-.happy{
- font-size:40px;
- animation:pop 0.6s ease
-}
-.sad{
- font-size:40px;
- animation:bounce 1s ease infinite
-}
+.happy{font-size:40px;animation:pop 0.5s ease}
+.sad{font-size:40px;animation:bounce 1s ease infinite}
 
-@keyframes pop{
- from{transform:scale(0.5);opacity:0}
- to{transform:scale(1);opacity:1}
-}
-@keyframes bounce{
- 0%,100%{transform:translateY(0)}
- 50%{transform:translateY(-6px)}
-}
-
-.white-text{
- color:white;
- font-weight:700;
- font-size:18px;
- margin-bottom:6px;
-}
+@keyframes pop{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 </style>
 </head>
 
@@ -190,7 +151,7 @@ function slabRate(s){
 }
 
 function rainMoney(container){
- for(let i=0;i<15;i++){
+ for(let i=0;i<18;i++){
   let m=document.createElement("div");
   m.className="money";
   m.innerHTML="💸";
@@ -209,26 +170,27 @@ function calculate(){
  const emoji=document.getElementById("emoji");
 
  loader.style.width="100%";
+ resultBox.style.display="block";
+ emoji.innerHTML="";
 
- setTimeout(()=>{
  let n=parseInt(nonDiscounted.value)||0;
  let r=parseInt(referral.value)||0;
  let m=parseInt(manager.value)||0;
  let p=probation.value;
- let rate=slabRate(n);
 
- resultBox.style.display="block";
- emoji.innerHTML="";
+ setTimeout(()=>{
 
- if(rate===0){
+ // NEW RULE: eligible if n >= 4
+ if(n < 4){
   status.innerHTML='<div class="white-text">Not Eligible</div>';
-  amount.innerHTML="Minimum 4 required";
+  amount.innerHTML="Minimum 4 non discounted sales required";
   calcDetails.innerHTML="";
   emoji.innerHTML='<div class="sad">😢</div>';
   loader.style.width="0";
   return;
  }
 
+ let rate=slabRate(n);
  let nonDiscRate=p==="yes"?5000:rate;
  let nonDiscPay=n*nonDiscRate;
  let refPay=r*5000;
@@ -253,4 +215,5 @@ function calculate(){
 
 </body>
 </html>
+
 
