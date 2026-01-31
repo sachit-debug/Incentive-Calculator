@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scaler Incentive Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box}
 body{
@@ -17,6 +18,8 @@ body{
  overflow:hidden;
  background:#0f172a;
 }
+
+/* Liquid glow */
 .liquid{
  position:absolute;width:600px;height:600px;
  background:radial-gradient(circle,rgba(99,102,241,0.35),transparent 60%);
@@ -31,41 +34,19 @@ body{
  from{transform:translate(-150px,-100px) scale(1)}
  to{transform:translate(150px,120px) scale(1.2)}
 }
-.header{position:absolute;top:30px;text-align:center;width:100%;z-index:2}
+
+/* Header */
+.header{
+ position:absolute;top:30px;text-align:center;width:100%;z-index:2
+}
 .header img{height:170px}
-.tagline{font-size:26px;font-weight:700;color:#c7d2fe;margin-top:12px;letter-spacing:2px}
+.tagline{
+ font-size:26px;font-weight:700;color:#c7d2fe;margin-top:12px;letter-spacing:2px
+}
+
+/* Card */
 .container{
  backdrop-filter:blur(25px);
- background:rgba(30,41,59,0.6);
- border-radius:24px;
- padding:36px;
- width:460px;
- box-shadow:0 30px 80px rgba(0,0,0,0.5);
- border:1px solid rgba(255,255,255,0.08);
- z-index:2;
- margin-top:200px;
-}
-h1{font-size:22px;margin-bottom:4px;font-weight:600;color:white}
-.sub{color:#a5b4fc;font-size:13px;margin-bottom:22px}
-label{font-size:13px;font-weight:600;color:#cbd5e1}
-input,select{
- width:100%;padding:12px;margin:8px 0 18px;border-radius:14px;
- border:1px solid rgba(255,255,255,0.08);
- background:rgba(255,255,255,0.06);
- color:white
-}
-button.calc{
- width:100%;padding:14px;border:none;border-radius:16px;
- background:linear-gradient(120deg,#6366f1,#8b5cf6);
- color:white;font-weight:600;font-size:15px;cursor:pointer
-}
-.result{
- margin-top:20px;padding:18px;border-radius:16px;
- display:none;text-align:center
-}
-.eligible{background:rgba(16,185,129,0.15);color:#34d399}
-.noteligible{background:rgba(239,68,68,0.15);color:#f87171}
-.big{font-size:36px;font-weight:700;margin-top:6px;color:#4ade80}
-.calc-lines{margin-top:12px;font-size:13px;line-height:1.6;color:#cbd5e1}
-.loader{height:4px;width:0;background:linear-gradient(90deg,#6366f1,#8b5cf6);bord
+ background:rgba(3
+
 
