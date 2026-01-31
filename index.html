@@ -1,38 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scaler Incentive Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:'Poppins',sans-serif;height:100vh;display:flex;justify-content:center;align-items:center;background:#0f172a;overflow:hidden}
 
-/* Glass UI */
-.container{background:rgba(255,255,255,0.06);backdrop-filter:blur(35px);border-radius:28px;padding:40px;width:480px;margin-top:220px}
-.header{position:absolute;top:40px;text-align:center;width:100%}
-.header img{height:160px}
-.tagline{font-size:26px;font-weight:700;color:white;margin-top:12px}
-
-/* WHITE BOLD LABELS */
-label{
+body{
+ margin:0;
+ font-family:Poppins;
+ background:linear-gradient(120deg,#0b1220,#111827,#0b1220);
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
  color:white;
+}
+
+/* Floating light orbs */
+body::before, body::after{
+ content:"";
+ position:absolute;
+ width:500px;height:500px;border-radius:50%;
+ filter:blur(120px);opacity:.3;
+ animation:float 20s infinite alternate ease-in-out;
+}
+body::before{background:#6366f1;top:-120px;left:-120px;}
+body::after{background:#22c55e;bottom:-120px;right:-120px;}
+@keyframes float{to{transform:translateY(80px)}}
+
+/* Header */
+.header{
+ position:absolute;top:40px;text-align:center;width:100%;
+ animation:fadeIn 1.2s ease forwards;
+}
+.header img{height:150px}
+.title{font-size:24px;font-weight:700;margin-top:10px;letter-spacing:1px;color:#e5e7eb}
+
+/* Glass Card */
+.container{
+ width:480px;
+ padding:40px;
+ border-radius:28px;
+ background:rgba(255,255,255,0.06);
+ backdrop-filter:blur(45px);
+ border:1px solid rgba(255,255,255,0.08);
+ box-shadow:0 25px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.1);
+ margin-top:220px;
+ animation:fadeIn 1s ease forwards;
+}
+
+/* Section Labels */
+label{
  font-weight:700;
- font-size:14px;
+ font-size:13px;
+ color:#f3f4f6;
 }
 
 input,select{
- width:100%;padding:14px;margin:8px 0 18px;border-radius:16px;border:none;background:rgba(255,255,255,0.08);color:white
+ width:100%;
+ padding:14px;
+ margin:8px 0 18px;
+ border-radius:16px;
+ border:none;
+ background:rgba(255,255,255,.08);
+ color:white;
+ transition:.25s;
+}
+input:focus,select:focus{
+ outline:none;
+ background:rgba(255,255,255,.14);
+ box-shadow:0 0 0 2px rgba(99,102,241,.5);
 }
 
-button{width:100%;padding:15px;border:none;border-radius:18px;background:linear-gradient(120deg,#6366f1,#8b5cf6);color:white;font-weight:600;font-size:16px}
+/* Button */
+button{
+ width:100%;
+ padding:15px;
+ border:none;
+ border-radius:18px;
+ background:linear-gradient(120deg,#6366f1,#8b5cf6);
+ color:white;
+ font-weight:600;
+ font-size:16px;
+ cursor:pointer;
+ transition:.25s;
+}
+button:hover{
+ transform:translateY(-3px);
+ box-shadow:0 12px 35px rgba(99,102,241,.5);
+}
 
-.result{margin-top:22px;padding:20px;border-radius:18px;display:none;text-align:center;background:rgba(255,255,255,0.05);position:relative;overflow:hidden}
-.big{font-size:38px;font-weight:700;color:#4ade80}
-.calc-lines{margin-top:14px;font-size:13px;color:white}
-.white-text{color:white;font-weight:700;font-size:19px}
+/* Result Hero */
+.result{
+ margin-top:25px;
+ padding:24px;
+ border-radius:20px;
+ display:none;
+ text-align:center;
+ background:rgba(255,255,255,.05);
+ position:relative;
+ overflow:hidden;
+ animation:fadeIn .5s ease forwards;
+}
+
+.big{
+ font-size:46px;
+ font-weight:700;
+ background:linear-gradient(90deg,#4ade80,#22c55e);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+}
+
+.status{
+ font-size:20px;
+ font-weight:700;
+ margin-bottom:8px;
+}
+
+.calc-lines{
+ margin-top:14px;
+ font-size:13px;
+ color:#e5e7eb;
+}
 
 /* Money animation */
 .money{
@@ -41,8 +133,12 @@ button{width:100%;padding:15px;border:none;border-radius:18px;background:linear-
  font-size:22px;
  animation:fall 2s linear forwards;
 }
-@keyframes fall{
- to{transform:translateY(280px);opacity:0}
+@keyframes fall{to{transform:translateY(260px);opacity:0}}
+
+/* Fade animation */
+@keyframes fadeIn{
+ from{opacity:0;transform:translateY(15px)}
+ to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
@@ -51,110 +147,116 @@ button{width:100%;padding:15px;border:none;border-radius:18px;background:linear-
 
 <div class="header">
  <img src="scaler-logo.png">
- <div class="tagline">INCENTIVE CALCULATOR</div>
+ <div class="title">INCENTIVE CALCULATOR</div>
 </div>
 
 <div class="container">
- <label>Non Discounted Net Sales</label>
- <input type="number" id="nonDiscounted">
 
- <label>Referral Sales</label>
- <input type="number" id="referral">
+<label>Non Discounted Net Sales</label>
+<input type="number" id="n">
 
- <label>Manager Coupon Sales</label>
- <input type="number" id="manager">
+<label>Referral Sales</label>
+<input type="number" id="r">
 
- <label>On Probation?</label>
- <select id="probation">
-  <option value="no">No</option>
-  <option value="yes">Yes</option>
- </select>
+<label>Manager Coupon Sales</label>
+<input type="number" id="m">
 
- <button onclick="calculate()">Calculate Incentive</button>
+<label>On Probation?</label>
+<select id="p">
+ <option value="no">No</option>
+ <option value="yes">Yes</option>
+</select>
 
- <div id="resultBox" class="result">
-  <div id="status"></div>
-  <div class="big" id="amount"></div>
-  <div id="calcDetails" class="calc-lines"></div>
- </div>
+<button onclick="calc()">Calculate Incentive</button>
+
+<div id="box" class="result">
+ <div id="status" class="status"></div>
+ <div id="amt" class="big"></div>
+ <div id="details" class="calc-lines"></div>
+</div>
 </div>
 
 <script>
-// 💰 Cash register sound
-function playCongratsSound(){
- const audio=new Audio("https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3");
- audio.volume=0.5;
+// Cash sound
+function playSound(){
+ let audio=new Audio("https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3");
+ audio.volume=.5;
  audio.play();
 }
 
-// 💸 Money rain
-function rainMoney(container){
+// Money rain
+function rain(){
+ let box=document.getElementById("box");
  for(let i=0;i<20;i++){
-  let m=document.createElement("div");
-  m.className="money";
-  m.innerHTML="💸";
-  m.style.left=Math.random()*95+"%";
-  container.appendChild(m);
-  setTimeout(()=>m.remove(),2000);
+  let e=document.createElement("div");
+  e.className="money";
+  e.innerHTML="💸";
+  e.style.left=Math.random()*90+"%";
+  box.appendChild(e);
+  setTimeout(()=>e.remove(),2000);
  }
 }
 
-function getSlabRate(total){
- if(total>=18)return 30000;
- if(total>=16)return 27500;
- if(total>=14)return 25000;
- if(total>=12)return 22500;
- if(total>=10)return 20000;
- if(total>=8)return 17500;
- if(total>=6)return 15000;
+// Counter animation
+function animateValue(el,start,end){
+ let duration=800;
+ let step=(end-start)/duration*10;
+ let val=start;
+ let interval=setInterval(()=>{
+  val+=step;
+  if(val>=end){val=end;clearInterval(interval)}
+  el.innerHTML="₹ "+Math.floor(val).toLocaleString();
+ },10);
+}
+
+function slab(t){
+ if(t>=18)return 30000;
+ if(t>=16)return 27500;
+ if(t>=14)return 25000;
+ if(t>=12)return 22500;
+ if(t>=10)return 20000;
+ if(t>=8)return 17500;
+ if(t>=6)return 15000;
  return 12500;
 }
 
-function calculate(){
- let n=parseInt(nonDiscounted.value)||0;
- let r=parseInt(referral.value)||0;
- let m=parseInt(manager.value)||0;
- let probation=document.getElementById("probation").value;
+function calc(){
+ let n=+document.getElementById("n").value||0;
+ let r=+document.getElementById("r").value||0;
+ let m=+document.getElementById("m").value||0;
+ let p=document.getElementById("p").value;
+ let total=n+r+m;
 
- let totalSales=n+r+m;
+ let box=document.getElementById("box");
+ box.style.display="block";
 
- let resultBox=document.getElementById("resultBox");
- let status=document.getElementById("status");
- let amount=document.getElementById("amount");
- let calcDetails=document.getElementById("calcDetails");
-
- resultBox.style.display="block";
-
- if(totalSales<4){
-  status.innerHTML='';
-  amount.innerHTML="Minimum 4 total sales required";
-  calcDetails.innerHTML="";
+ if(total<4){
+  document.getElementById("status").innerHTML="Not Eligible";
+  document.getElementById("amt").innerHTML="Minimum 4 sales required";
   return;
  }
 
- let rate=probation==="yes"?5000:getSlabRate(totalSales);
+ let rate=p==="yes"?5000:slab(total);
+ let totalAmt=n*rate+r*5000+m*10000;
 
- let nonDiscPay=n*rate;
- let refPay=r*5000;
- let mgrPay=m*10000;
- let total=nonDiscPay+refPay+mgrPay;
+ document.getElementById("status").innerHTML="Congratulations 🎉 Eligible";
+ animateValue(document.getElementById("amt"),0,totalAmt);
 
- status.innerHTML='<div class="white-text">Congratulations 🎉 Eligible</div>';
- amount.innerHTML="₹ "+total.toLocaleString();
+ document.getElementById("details").innerHTML=
+ `Total Sales: ${total}<br>
+ Slab Applied: ₹ ${rate.toLocaleString()}<br>
+ ND: ${n} × ${rate.toLocaleString()}<br>
+ Referral: ${r} × 5,000<br>
+ Manager: ${m} × 10,000`;
 
- calcDetails.innerHTML=
- `Total Sales: ${totalSales}<br><br>
- Non Discounted: ${n} × ${rate.toLocaleString()} = ₹ ${nonDiscPay.toLocaleString()}<br>
- Referral: ${r} × 5,000 = ₹ ${refPay.toLocaleString()}<br>
- Manager: ${m} × 10,000 = ₹ ${mgrPay.toLocaleString()}`;
-
- playCongratsSound();
- rainMoney(resultBox);
+ playSound();
+ rain();
 }
 </script>
 
 </body>
 </html>
+
 
 
 
