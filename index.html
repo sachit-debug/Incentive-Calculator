@@ -18,13 +18,10 @@ body{
  background:#0f172a;
  overflow:hidden;
 }
-
-/* Header */
 .header{position:absolute;top:40px;text-align:center;width:100%}
 .header img{height:160px}
 .tagline{font-size:24px;font-weight:700;color:#c7d2fe;margin-top:12px}
 
-/* Card */
 .container{
  background:rgba(30,41,59,0.85);
  backdrop-filter:blur(20px);
@@ -40,61 +37,28 @@ h1{color:white;font-size:22px}
 label{color:#cbd5e1;font-size:13px;font-weight:600}
 
 input,select{
- width:100%;
- padding:12px;
- margin:8px 0 18px;
- border-radius:12px;
+ width:100%;padding:12px;margin:8px 0 18px;border-radius:12px;
  border:1px solid rgba(255,255,255,0.08);
  background:rgba(255,255,255,0.06);
  color:white
 }
 
 button{
- width:100%;
- padding:14px;
- border:none;
- border-radius:14px;
+ width:100%;padding:14px;border:none;border-radius:14px;
  background:linear-gradient(120deg,#6366f1,#8b5cf6);
- color:white;
- font-weight:600;
- font-size:15px;
- cursor:pointer
+ color:white;font-weight:600;font-size:15px;cursor:pointer
 }
 
-.loader{
- height:4px;
- width:0;
- background:#8b5cf6;
- margin-bottom:12px;
- transition:width 0.6s
-}
-
-.result{
- margin-top:20px;
- padding:18px;
- border-radius:14px;
- display:none;
- text-align:center;
- position:relative;
- overflow:hidden
-}
-
+.loader{height:4px;width:0;background:#8b5cf6;margin-bottom:12px;transition:width 0.6s}
+.result{margin-top:20px;padding:18px;border-radius:14px;display:none;text-align:center;position:relative;overflow:hidden}
 .big{font-size:34px;font-weight:700;color:#4ade80}
 .calc-lines{margin-top:12px;font-size:13px;color:#cbd5e1}
 .white-text{color:white;font-weight:700;font-size:18px}
 
-/* Animations */
-.money{
- position:absolute;
- top:-20px;
- font-size:22px;
- animation:fall 2s linear forwards
-}
+.money{position:absolute;top:-20px;font-size:22px;animation:fall 2s linear forwards}
 @keyframes fall{to{transform:translateY(260px);opacity:0}}
-
 .happy{font-size:40px;animation:pop 0.5s ease}
 .sad{font-size:40px;animation:bounce 1s ease infinite}
-
 @keyframes pop{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 </style>
@@ -178,12 +142,13 @@ function calculate(){
  let m=parseInt(manager.value)||0;
  let p=probation.value;
 
+ let totalSales = n + r + m;  // NEW RULE
+
  setTimeout(()=>{
 
- // NEW RULE: eligible if n >= 4
- if(n < 4){
+ if(totalSales < 4){
   status.innerHTML='<div class="white-text">Not Eligible</div>';
-  amount.innerHTML="Minimum 4 non discounted sales required";
+  amount.innerHTML="Minimum 4 total sales required";
   calcDetails.innerHTML="";
   emoji.innerHTML='<div class="sad">😢</div>';
   loader.style.width="0";
@@ -201,7 +166,8 @@ function calculate(){
  amount.innerHTML="₹ "+total.toLocaleString();
 
  calcDetails.innerHTML=
- `Non discounted: ${n} × ${nonDiscRate.toLocaleString()} = ₹ ${nonDiscPay.toLocaleString()} <br>
+ `Total Sales = ${totalSales} <br><br>
+  Non discounted: ${n} × ${nonDiscRate.toLocaleString()} = ₹ ${nonDiscPay.toLocaleString()} <br>
   Referral: ${r} × 5,000 = ₹ ${refPay.toLocaleString()} <br>
   Manager: ${m} × 10,000 = ₹ ${mgrPay.toLocaleString()}`;
 
@@ -215,5 +181,3 @@ function calculate(){
 
 </body>
 </html>
-
-
